@@ -1,0 +1,122 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	</head> 
+	<body> 
+
+		<script> 
+
+			
+			function validate(a, b, c) { 
+				 if (a == b && (c == '0' || c == '1')){
+                     return true;
+                }
+                else{
+                    return false;
+                }
+			}
+            
+            function reflexivity(mas){
+                var str = "reflexivity<br>";
+                for(var i = 0; i < mas.length; ++i){
+                    if (mas[i][i] == 0){
+                        str = "no reflexivity<br>";
+                        break;
+                    }
+                }
+                return str;
+            }
+            
+            function cososymmetry(mas){
+                var str = "cososymmetry<br>";
+                var pr = true;
+                for (var i = 0; i < mas.length; ++i){
+                    if (pr){
+                        for (var j = 0; j < mas.length; ++j){
+                            if (mas[i][j] == mas[j][i] && i != j){
+                                pr = false;
+                                str = "no cososymmetry<br>";
+                                break;
+                            }
+                        }
+                    }
+                }
+                return str;
+            }
+            
+            function symmetry(mas){
+                var str = "symmetry<br>";
+                var pr = true;
+                for (var i = 0; i < mas.length; ++i){
+                    if (pr){
+                        for (var j = 0; j < mas.length; ++j){
+                            if (mas[i][j] != mas[j][i]){
+                                pr = false;
+                                str = "no symmetry<br>";
+                                break;
+                            }
+                        }
+                    }
+                }
+                return str;
+            }
+            
+            function transitivity(mas){
+                var c, arr = [];
+                for (var i = 0; i < mas.length; i++){
+                    arr[i] = [];
+                }
+
+                for (var n = 0; n < mas.length; n++){
+                for (var i = 0; i < mas.length; i++){
+                c = 0;
+                for (var j = 0; j < mas.length; j++){
+                    c += mas[i][j] * mas[j][n];
+                }
+                A[n][i] = c;
+                }
+            }
+            
+			function getdatauser(){
+                var vmas = document.getElementById('mas').value;
+                var mas = new Array();
+                var pr = true;
+                vmas = vmas.split('\n');
+                for(var i = 0; i < vmas.length; ++i){
+                    mas[i] = new Array();
+                    var a = vmas[i];
+                    if (pr){
+                        for(var j = 0; j < a.length; ++j){
+                            if (validate(a.length, vmas.length, a[j])){
+                                mas[i][j] = a[j];
+                            }
+                            else{
+                                pr = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!pr){
+                    document.getElementById('result').innerHTML = "error";
+                }
+                else{
+				    document.getElementById('result').innerHTML = reflexivity(mas) + symmetry(mas) + cososymmetry(mas) + transitivity(mas);
+                }
+			} 
+
+		</script> 
+
+		<form> 
+			massive <textarea required = "true"  cols = "20" rows = "10" name = "mas" id='mas'></textarea><br> 
+			<input type='button' value='start' onClick="getdatauser()"> 
+		</form> 
+
+		<div id='result'> 
+
+		</div> 
+
+
+
+	</body> 
+</html>

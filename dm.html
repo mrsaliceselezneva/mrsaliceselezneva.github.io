@@ -1,0 +1,207 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	</head> 
+	<body> 
+
+		<script> 
+
+			
+			function validate(mas) { 
+				var check = true; 
+				for (var i = 0; i < mas.length; ++i){ 
+					if (mas[i].length == 3){ 
+						if (mas[i][0] < 'a' || mas[i][0] > 'z' || mas[i][1] < 'a' || mas[i][1] > 'z' || mas[i][2] < '0' || mas[i][2] > '9' || mas[i][2] % 2 != 0){ 
+							check = false; 
+							break; 
+						}
+					} 
+					else { 
+						check = false; 
+						break; 
+					} 
+				} 
+				if (check) 
+					return false; 
+				else 
+					return true; 
+			} 
+
+			function union(mas1, mas2) { 
+				var str = ""; 
+				for(var i = 0; i < mas1.length; i++){ 
+					var check = true;
+					for(var j = i + 1; j < mas1.length; j++){ 
+						if (mas1[j] == mas1[i]){ 
+							check = false; 
+							break; 
+						} 
+					} 
+					if (check) 
+						str += mas1[i] + " "; 
+				} 
+				for(var i = 0; i < mas2.length; i++){ 
+					var check = true; 
+					for(var j = 0; j < mas1.length; j++){ 
+						if (mas1[j] == mas2[i]){ 
+							check = false; 
+							break; 
+						} 
+					}
+					if (check){
+						for(var j = i + 1; j < mas2.length; j++){ 
+							if (mas2[j] == mas2[i]){ 
+								check = false; 
+								break; 
+						} 
+					} 
+					if (check) 
+						str += mas2[i] + " "; 
+					}
+				}
+				return str;
+			} 
+
+			function intersection(mas1, mas2){ 
+				var str = ""; 
+				for(var i = 0; i < mas2.length; i++){
+					var check = true;
+					for(var j = i + 1; j < mas2.length; j++){ 
+						if (mas2[j] == mas2[i]){ 
+							check = false; 
+							break; 
+						} 
+					} 
+					if (check){
+						check = false; 
+						var n = 0;
+						for(var j = 0; j < mas1.length; j++){ 
+							if (mas1[j] == mas2[i]){ 
+								check = true; 
+								n = j;
+								break; 
+							} 
+						} 
+						if (check){
+							check = true;
+							for(var j = n + 1; j < mas2.length; j++){ 
+								if (mas1[j] == mas1[i]){ 
+									check = false; 
+									break; 
+								} 
+							} 
+						} 
+						if (check)
+							str += mas2[i] + " "; 
+					}
+				} 
+				return str; 
+			} 
+
+			function addition(mas1, mas2){ 
+				var str = ""; 
+				for(var i = 0; i < mas2.length; i++){
+					var check = true;
+					for(var j = i + 1; j < mas2.length; j++){ 
+						if (mas2[j] == mas2[i]){ 
+							check = false; 
+							break; 
+						} 
+					} 
+					if (check){
+						check = true; 
+						var n = 0;
+						for(var j = 0; j < mas1.length; j++){ 
+							if (mas1[j] == mas2[i]){ 
+								check = false; 
+								n = j;
+								break; 
+							} 
+						}
+						if (check)
+							str += mas2[i] + " "; 
+					}
+				} 
+				return str; 
+			} 
+			
+			function my_split(mas){
+				mas = mas.split(' н '); 
+				var val = "";
+				for(var i = 0; i < mas.length - 1; ++i){
+					val += mas[i] + " ";
+				}
+				var val2 = "";
+				for(var i = 0; i < val.length - 1; ++i){
+					val2 += val[i];
+				}
+				return val2.split(' ');
+			}
+			
+			
+			function getDataUser() { 
+				var mas1 = document.getElementById('massA').value; 
+				mas1 = my_split(mas1); 
+				var vali = "";
+				for(var i = 0; i < mas1.length; ++i){
+					vali += i + mas1[i] + i;
+				}
+				if( validate(mas1) ) { 
+					alert("Первое множество введено неправильно"); 
+					return; 
+				} 
+				else{
+					for (var i = 0; i < mas1.length; ++i){
+						mas1[i] += " н";
+					}
+				}
+				
+				var mas2 = document.getElementById('massB').value; 
+				mas2 = my_split(mas2); 
+				if( validate(mas2) ) { 
+					alert("Второе множество введено неправильно"); 
+					return; 
+				} 
+				else{
+					for (var i = 0; i < mas2.length; ++i){
+						mas2[i] += " н";
+					}
+				}
+				var masG = document.getElementById('massG').value; 
+				masG = my_split(masG); 
+				var vali = "";
+				for(var i = 0; i < masG.length; ++i){
+					vali += i + masG[i] + i;
+				}
+				if( validate(masG) ) { 
+					alert("Глобальное множество введено неправильно"); 
+					return; 
+				} 
+				else{
+					for (var i = 0; i < masG.length; ++i){
+						masG[i] += " н";
+					}
+				}
+				document.getElementById('result').innerHTML = "union: " + union(mas1, mas2) + ";<br>intersection: " + intersection(mas1, mas2) +
+				";<br>addition mas1/mas2: " + addition(mas2, mas1) + ";<br>addition mas2/mas1: " + addition(mas1, mas2) + 
+				";<br>symmetric difference: " + addition(mas1, mas2) + " " + addition(mas2, mas1) + ";<br>denial mas1: " + addition(mas1, masG) +
+				";<br>denial mas2: " + addition(mas2, masG) + ";";
+			} 
+
+		</script> 
+
+		<form> 
+			first massive <input name="mas1" id='massA'> <br> 
+			second massive <input name="mas2" id='massB'> <br> 
+			global massive <input name="masG" id='massG'> <br> 
+			<input typ e='button' value='start' onClick="getDataUser()"> 
+		</form> 
+
+		<div id='result'> 
+
+		</div> 
+
+
+
+	</body> 
+</html>
