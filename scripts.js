@@ -21,29 +21,6 @@ function CreateImg() {
 
 }
 
-function ChangeImg(a) {var countDiv = 10;
-var countImg = 16;
-var iActive = 0;
-var iActiveSlide = 0;
-var path = "input/page";
-var vol = 10;
-var num = 0;
-
-function CreateImg() {
-
-        for(var j = 0; j < countDiv; ++j){
-            for(var i = 0; i < countDiv; ++i){
-                var html = "<div class = 'img" + i + "'></div>";
-                var img = $(html);
-                img.css("background-position", "-" + i * 510 / countDiv + "px -" + j * 300 / countDiv + "px");
-                img.css("width", 510 / countDiv + "px"); //$('#main').css('width');
-                img.css("height", 300 / countDiv + "px"); //$('#main').css('width');
-                img.appendTo("#main");
-            }
-        }
-
-}
-
 function ChangeImg(a) {
 
         if (a != -1)
@@ -132,6 +109,10 @@ setInterval(function(){
     ++num;
     num %= 5;
    }, 5000);
+
+
+
+
 
 
 
