@@ -1,7 +1,3 @@
-
-
-
-
 var countDiv = 10;
 var countImg = 16;
 var iActive = 0;
@@ -57,25 +53,78 @@ function RightImg(){
     ChangeImg(-1);
 }
 
+
+
+
 function CreateSlider(a) {
     var html = "<table><tr>";
     a %= 16;
     var n = a;
     for(var i = a; i < a + 5; ++i){
         n = i;
-        var vhtml = '<td> <div id = "cell' + i + '" class = "cell' + i + '"> </td>';
-        html += vhtml;
-        var img = $(vhtml);
-        img.css("width", 170 + "px"); 
-        img.css("height", 100 + "px"); 
-        img.appendTo("#slider");
+        html += '<td> <div id = "cell' + (i + 16) % 16 + ' class = "sliderImg"> </td>';
+        var img = $(html);
     }
     html += '</tr>';
-    
+
+
+    html += "<tr>";
+    n += 11 + 16;
+    n %= 16;
+    html += '<td> <div id = "cell' + (n + 16) % 16 + ' class = "sliderImg"> </td>';
+    var img = $(html);
+
+    html += '<td colspan = "3" rowspan = "3"><div id = "main"></div></td>';
+    var img = $(html);
+
+    n -= 10;
+    n += 16;
+    n %= 16;
+    html += '<td> <div id = "cell' + (n + 16) % 16 + ' class = "sliderImg"> </td>';
+    var img = $(html);
+    html += '</tr>';
+
+    html += "<tr>";
+    n += 9;
+    n += 16;
+    n %= 16;
+    html += '<td> <div id = "cell' + (n + 16) % 16 + ' class = "sliderImg"> </td>';
+    var img = $(html);
+
+    n -= 8;
+    n += 16;
+    n %= 16;
+    html += '<td> <div id = "cell' + (n + 16) % 16 + ' class = "sliderImg"> </td>';
+    var img = $(html);
+    html += '</tr>';
+
+    html += "<tr>";
+    n += 7;
+    n += 16;
+    n %= 16;
+    html += '<td> <div id = "cell' + (n + 16) % 16 + ' class = "sliderImg"> </td>';
+    var img = $(html);
+
+    n -= 6;
+    n += 16;
+    n %= 16;
+    html += '<td> <div id = "cell' + (n + 16) % 16 + ' class = "sliderImg"> </td>';
+    var img = $(html);
+    html += '</tr>';
+
+    n += 5;
+    n += 16;
+    n %= 16;
+    html += "<tr>";
+    for(var i = n; i > n - 5; --i){
+        html += '<td> <div id = "cell' + (i + 16) % 16 + ' class = "sliderImg"> </td>';
+        var img = $(html);
+    }
+    html += '</tr>';
+
     html += '</table>';
     img.appendTo("#slider");
 }
-
 
 function ChangeCell(a, n) {
     var sl = document.getElementById("slider");
@@ -87,7 +136,7 @@ function ChangeCell(a, n) {
             $(slChildren[i]).each(function() {
                 ++j;
                     $(this).fadeOut(vol * j, function() {
-                    $(this).css('background-image', 'url("' + path + n + '.jpg")');
+                    $(this).html('<img src = "input/page' + n + '.jpg" width "170px" height = "100px" onclick = "ChangeImg(' + n + ')">');
                     $(this).fadeIn(vol * j);
                 });
             });
@@ -98,22 +147,23 @@ function ChangeCell(a, n) {
 
 $(document).ready(function() {
     CreateSlider(0);
-    for(var i = 0; i < 5; ++i){
+    for(var i = 0; i < 16; ++i){
         ChangeCell(i, i);
     }
-    num = 1;
+    num = 15;
+    CreateImg();
+    ChangeImg(iActive);
 });
 
 setInterval(function(){
     var v = 0;
-     for(var i = num; i < num + 5; ++i){
-        ChangeCell((i + 5) % 5, v);
+     for(var i = num; i < num + 16; ++i){
+        ChangeCell(v, (i + 16) % 16);
          ++v;
     }
-    ++num;
-    num %= 5;
+    --num;
+    num = (num + 16) % 16;
 }, 5000);
-
 
 
 
