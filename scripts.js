@@ -63,63 +63,12 @@ function CreateSlider(a) {
     var n = a;
     for(var i = a; i < a + 5; ++i){
         n = i;
-        html += '<td> <img src = "input/page'+ (i + 16) % 16 + '.jpg" height = "100px" height = "170px" onclick = "ChangeImg(' + (i + 16) % 16 + ')"> </td>';
-        var img = $(html);
-    }
-    html += '</tr>';
-    
-    
-    html += "<tr>";
-    n += 11 + 16;
-    n %= 16;
-    html += '<td> <img src = "input/page'+ n + '.jpg" height = "100px" height = "170px" onclick = "ChangeImg(' + n + ')"> </td>';
-    var img = $(html);
-    
-    html += '<td colspan = "3" rowspan = "3"><div id = "main"></div></td>';
-    var img = $(html);
-    
-    n -= 10;
-    n += 16;
-    n %= 16;
-    html += '<td> <img src = "input/page'+ n + '.jpg" height = "100px" height = "170px" onclick = "ChangeImg(' + n + ')"> </td>';
-    var img = $(html);
-    html += '</tr>';
-    
-    html += "<tr>";
-    n += 9;
-    n += 16;
-    n %= 16;
-    html += '<td> <img src = "input/page'+ n + '.jpg" height = "100px" height = "170px" onclick = "ChangeImg(' + n + ')"> </td>';
-    var img = $(html);
-    
-    n -= 8;
-    n += 16;
-    n %= 16;
-    html += '<td> <img src = "input/page'+ n + '.jpg" height = "100px" height = "170px" onclick = "ChangeImg(' + n + ')"> </td>';
-    var img = $(html);
-    html += '</tr>';
-    
-    html += "<tr>";
-    n += 7;
-    n += 16;
-    n %= 16;
-    html += '<td> <img src = "input/page'+ n + '.jpg" height = "100px" height = "170px" onclick = "ChangeImg(' + n + ')"> </td>';
-    var img = $(html);
-    
-    n -= 6;
-    n += 16;
-    n %= 16;
-    html += '<td> <img src = "input/page'+ n + '.jpg" height = "100px" height = "170px" onclick = "ChangeImg(' + n + ')"> </td>';
-    var img = $(html);
-    html += '</tr>';
-    
-    n += 5;
-    n += 16;
-    n %= 16;
-    html += "<tr>";
-    for(var i = n; i > n - 5; --i){
-        html += '<td> <img src = "input/page'+ (i + 16) % 16 + '.jpg" height = "100px" height = "170px" onclick = "ChangeImg(' + (i + 16) % 16 + ')"> </td>';
-        var img = $(html);
+        var vhtml = '<td> <div id = "cell' + i + '" class = "cell' + i + '"> </td>';
+        html += vhtml;
+        var img = $(vhtml);
+        img.css("width", 170 + "px"); 
+        img.css("height", 100 + "px"); 
+        img.appendTo("#slider");
     }
     html += '</tr>';
     
@@ -128,11 +77,43 @@ function CreateSlider(a) {
 }
 
 
+function ChangeCell(a, n) {
+    var sl = document.getElementById("slider");
+    var slChildren = sl.querySelectorAll("div");
 
+    for(var i = 0; i < slChildren.length; ++i){
+       if((slChildren[i].id).indexOf("cell" + a) == 0){
+            var j = 1;
+            $(slChildren[i]).each(function() {
+                ++j;
+                    $(this).fadeOut(vol * j, function() {
+                    $(this).css('background-image', 'url("' + path + n + '.jpg")');
+                    $(this).fadeIn(vol * j);
+                });
+            });
+       }
+    }
+
+}
 
 $(document).ready(function() {
     CreateSlider(0);
-    CreateImg();
-    ChangeImg(iActive);
+    for(var i = 0; i < 5; ++i){
+        ChangeCell(i, i);
+    }
+    num = 1;
 });
+
+setInterval(function(){
+    var v = 0;
+     for(var i = num; i < num + 5; ++i){
+        ChangeCell((i + 5) % 5, v);
+         ++v;
+    }
+    ++num;
+    num %= 5;
+}, 5000);
+
+
+
 
