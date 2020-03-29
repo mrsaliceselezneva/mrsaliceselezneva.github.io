@@ -3,21 +3,21 @@ var countImg = 16;
 var iActive = 0;
 var iActiveSlide = 0;
 var path = "input/page";
-var vol = 10;
+var volImg = 10;
+var volSlider = 200;
 var num = 0;
 
 function CreateImg() {
-
-        for(var j = 0; j < countDiv; ++j){
-            for(var i = 0; i < countDiv; ++i){
-                var html = "<div class = 'img" + i + "'></div>";
-                var img = $(html);
-                img.css("background-position", "-" + i * 510 / countDiv + "px -" + j * 300 / countDiv + "px");
-                img.css("width", 510 / countDiv + "px"); //$('#main').css('width');
-                img.css("height", 300 / countDiv + "px"); //$('#main').css('width');
-                img.appendTo("#main");
-            }
+    for(var j = 0; j < countDiv; ++j){
+        for(var i = 0; i < countDiv; ++i){
+            var html = "<div class = 'img" + i + "'></div>";
+            var img = $(html);
+            img.css("background-position", "-" + i * 510 / countDiv + "px -" + j * 300 / countDiv + "px");
+            img.css("width", 510 / countDiv + "px"); //$('#main').css('width');
+            img.css("height", 300 / countDiv + "px"); //$('#main').css('width');
+            img.appendTo("#main");
         }
+    }
 
 }
 
@@ -28,14 +28,13 @@ function ChangeImg(a) {
         var j = 1;
         $("#main div").each(function() {
             ++j;
-                $(this).fadeOut(vol * j, function() {
+                $(this).fadeOut(volImg * j, function() {
                 $(this).css('background-image', 'url("' + path + iActive + '.jpg")');
-                $(this).fadeIn(vol * j);
+                $(this).fadeIn(volImg * j);
             });
         });
 
 }
-
 
 function LeftImg(){
     --iActive;
@@ -52,9 +51,6 @@ function RightImg(){
     }
     ChangeImg(-1);
 }
-
-
-
 
 function CreateSlider(a) {
     var html = "<table><tr>";
@@ -135,9 +131,9 @@ function ChangeCell(a, n) {
             var j = 1;
             $(slChildren[i]).each(function() {
                 ++j;
-                    $(this).fadeOut(vol * j, function() {
+                    $(this).fadeOut(volSlider + n * 10, function() {
                     $(this).html('<img src = "input/page' + n + '.jpg" width "170px" height = "100px" onclick = "ChangeImg(' + n + ')">');
-                    $(this).fadeIn(vol * j);
+                    $(this).fadeIn(volSlider + n * 10);
                 });
             });
        }
@@ -164,6 +160,5 @@ setInterval(function(){
     --num;
     num = (num + 16) % 16;
 }, 5000);
-
 
 
