@@ -1,22 +1,21 @@
 function draw_hangman(i, now_word, name, use_letters){
-	
+	if (use_letters.indexOf(name) > -1){
+		return 0;
+	}
 	 if (now_word.indexOf(name) > -1){
-		 if (use_letters.indexOf(name) < 0){
-			 var cnt = 0;
-			 for (i = 0; i < now_word.length; ++i){
-				 if (name == now_word[i]){			 
-					 document.getElementById("letter" + i).remove();
-					 var cases = document.getElementById("td" + i);
-					 var div = document.createElement("div");
-					 div.id = "letter" + i;
-					 div.appendChild(document.createTextNode(name));
-					 cases.appendChild(div);
-					 ++cnt;
-				 }
+		 var cnt = 0;
+		 for (i = 0; i < now_word.length; ++i){
+			 if (name == now_word[i]){			 
+				 document.getElementById("letter" + i).remove();
+				 var cases = document.getElementById("td" + i);
+				 var div = document.createElement("div");
+				 div.id = "letter" + i;
+				 div.appendChild(document.createTextNode(name));
+				 cases.appendChild(div);
+				 ++cnt;
 			 }
-			 return cnt;
 		 }
-		 return 0;
+		 return cnt;
 	 }
 	let pi = Math.PI;
 	 board = [
@@ -99,6 +98,7 @@ function draw_hangman(i, now_word, name, use_letters){
 			 if(v < 0){	 
 				 this.style.backgroundColor = "rgb(255, 43, 43)";
 				 j -= v;
+				 use_letters += this.name;
 			 }
 			 else if (v > 0){
 				 this.style.backgroundColor = "rgb(0, 204, 0)";
